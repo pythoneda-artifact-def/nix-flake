@@ -17,12 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {
-  description = "Domain of Nix Flakes";
+  description = "Domain of the Nix Flake artifact";
   inputs = rec {
     nixos.url = "github:NixOS/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
     pythoneda-shared-git-shared = {
-      url = "github:pythoneda-shared-git/shared-artifact/0.0.1a19?dir=shared";
+      url = "github:pythoneda-shared-git/shared-artifact/0.0.1a20?dir=shared";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.pythoneda-shared-pythoneda-banner.follows =
@@ -32,7 +32,7 @@
     };
     pythoneda-shared-nix-flake-shared = {
       url =
-        "github:pythoneda-shared-nix-flake/shared-artifact/0.0.1a6?dir=shared";
+        "github:pythoneda-shared-nix-flake/shared-artifact/0.0.1a7?dir=shared";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.pythoneda-shared-git-shared.follows =
@@ -50,14 +50,14 @@
     };
     pythoneda-shared-pythoneda-domain = {
       url =
-        "github:pythoneda-shared-pythoneda/domain-artifact/0.0.1a41?dir=domain";
+        "github:pythoneda-shared-pythoneda/domain-artifact/0.0.1a42?dir=domain";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.pythoneda-shared-pythoneda-banner.follows =
         "pythoneda-shared-pythoneda-banner";
     };
     stringtemplate3 = {
-      url = "github:rydnr/nix-flakes/main?dir=stringtemplate3";
+      url = "github:rydnr/nix-flakes/stringtemplate3-3.1?dir=stringtemplate3";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -68,13 +68,13 @@
       let
         org = "pythoneda-artifact";
         repo = "nix-flake";
-        version = "0.0.1a6";
-        sha256 = "sha256-oxG4SBIz3cfipbKK3cTcNhR+z4JrcF31SsCUnqbn5aI=";
+        version = "0.0.1a7";
+        sha256 = "sha256-ZCl3G3KXBeI/3snMJkug41mKC9eIGM0zYwkoU3ZfH+I=";
         pname = "${org}-${repo}";
         pythonpackage = "pythoneda.artifact.nix_flake";
         package = builtins.replaceStrings [ "." ] [ "/" ] pythonpackage;
         pkgs = import nixos { inherit system; };
-        description = "Shared kernel for Nix Flakes";
+        description = "Domain of the Nix Flake artifact";
         license = pkgs.lib.licenses.gpl3;
         homepage = "https://github.com/${org}/${repo}";
         maintainers = with pkgs.lib.maintainers;
@@ -163,7 +163,7 @@
         devShells = rec {
           default = pythoneda-artifact-nix-flake-default;
           pythoneda-artifact-nix-flake-default =
-            pythoneda-artifact-nix-flake-python310;
+            pythoneda-artifact-nix-flake-python311;
           pythoneda-artifact-nix-flake-python38 = shared.devShell-for {
             package = packages.pythoneda-artifact-nix-flake-python38;
             python = pkgs.python38;
@@ -191,11 +191,20 @@
               pythoneda-shared-pythoneda-domain.packages.${system}.pythoneda-shared-pythoneda-domain-python310;
             inherit archRole layer nixpkgsRelease org pkgs repo space;
           };
+          pythoneda-artifact-nix-flake-python311 = shared.devShell-for {
+            package = packages.pythoneda-artifact-nix-flake-python311;
+            python = pkgs.python311;
+            pythoneda-shared-pythoneda-banner =
+              pythoneda-shared-pythoneda-banner.packages.${system}.pythoneda-shared-pythoneda-banner-python311;
+            pythoneda-shared-pythoneda-domain =
+              pythoneda-shared-pythoneda-domain.packages.${system}.pythoneda-shared-pythoneda-domain-python311;
+            inherit archRole layer nixpkgsRelease org pkgs repo space;
+          };
         };
         packages = rec {
           default = pythoneda-artifact-nix-flake-default;
           pythoneda-artifact-nix-flake-default =
-            pythoneda-artifact-nix-flake-python310;
+            pythoneda-artifact-nix-flake-python311;
           pythoneda-artifact-nix-flake-python38 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python38;
@@ -231,6 +240,18 @@
                 pythoneda-shared-pythoneda-domain.packages.${system}.pythoneda-shared-pythoneda-domain-python310;
               stringtemplate3 =
                 stringtemplate3.packages.${system}.stringtemplate3-python310;
+            };
+          pythoneda-artifact-nix-flake-python311 =
+            pythoneda-artifact-nix-flake-for {
+              python = pkgs.python311;
+              pythoneda-shared-git-shared =
+                pythoneda-shared-git-shared.packages.${system}.pythoneda-shared-git-shared-python311;
+              pythoneda-shared-nix-flake-shared =
+                pythoneda-shared-nix-flake-shared.packages.${system}.pythoneda-shared-nix-flake-shared-python311;
+              pythoneda-shared-pythoneda-domain =
+                pythoneda-shared-pythoneda-domain.packages.${system}.pythoneda-shared-pythoneda-domain-python311;
+              stringtemplate3 =
+                stringtemplate3.packages.${system}.stringtemplate3-python311;
             };
         };
       });
