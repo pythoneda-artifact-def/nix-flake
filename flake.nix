@@ -21,14 +21,14 @@
   inputs = rec {
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
     nixos.url = "github:NixOS/nixpkgs/nixos-23.05";
-    pythoneda-shared-artifact-events = {
+    pythoneda-shared-artifact-code-events = {
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixos.follows = "nixos";
       inputs.pythoneda-shared-pythoneda-banner.follows =
         "pythoneda-shared-pythoneda-banner";
       inputs.pythoneda-shared-pythoneda-domain.follows =
         "pythoneda-shared-pythoneda-domain";
-      url = "github:pythoneda-shared-artifact-def/events/0.0.8";
+      url = "github:pythoneda-shared-artifact-def/code-events/0.0.5";
     };
     pythoneda-shared-code-requests-events = {
       inputs.flake-utils.follows = "flake-utils";
@@ -37,7 +37,7 @@
         "pythoneda-shared-pythoneda-banner";
       inputs.pythoneda-shared-pythoneda-domain.follows =
         "pythoneda-shared-pythoneda-domain";
-      url = "github:pythoneda-shared-code-requests-def/events/0.0.5";
+      url = "github:pythoneda-shared-code-requests-def/events/0.0.6";
     };
     pythoneda-shared-code-requests-jupyterlab = {
       inputs.flake-utils.follows = "flake-utils";
@@ -46,7 +46,7 @@
         "pythoneda-shared-pythoneda-banner";
       inputs.pythoneda-shared-pythoneda-domain.follows =
         "pythoneda-shared-pythoneda-domain";
-      url = "github:pythoneda-shared-code-requests-def/jupyterlab/0.0.4";
+      url = "github:pythoneda-shared-code-requests-def/jupyterlab/0.0.5";
     };
     pythoneda-shared-code-requests-shared = {
       inputs.flake-utils.follows = "flake-utils";
@@ -55,7 +55,7 @@
         "pythoneda-shared-pythoneda-banner";
       inputs.pythoneda-shared-pythoneda-domain.follows =
         "pythoneda-shared-pythoneda-domain";
-      url = "github:pythoneda-shared-code-requests-def/shared/0.0.4";
+      url = "github:pythoneda-shared-code-requests-def/shared/0.0.5";
     };
     pythoneda-shared-nix-flake-shared = {
       inputs.flake-utils.follows = "flake-utils";
@@ -64,7 +64,7 @@
         "pythoneda-shared-pythoneda-banner";
       inputs.pythoneda-shared-pythoneda-domain.follows =
         "pythoneda-shared-pythoneda-domain";
-      url = "github:pythoneda-shared-nix-flake-def/shared/0.0.8";
+      url = "github:pythoneda-shared-nix-flake-def/shared/0.0.9";
     };
     pythoneda-shared-pythoneda-banner = {
       inputs.flake-utils.follows = "flake-utils";
@@ -76,7 +76,7 @@
       inputs.nixos.follows = "nixos";
       inputs.pythoneda-shared-pythoneda-banner.follows =
         "pythoneda-shared-pythoneda-banner";
-      url = "github:pythoneda-shared-pythoneda-def/domain/0.0.2";
+      url = "github:pythoneda-shared-pythoneda-def/domain/0.0.3";
     };
   };
   outputs = inputs:
@@ -103,7 +103,7 @@
         nixpkgsRelease = "nixos-${nixosVersion}";
         shared = import "${pythoneda-shared-pythoneda-banner}/nix/shared.nix";
         pythoneda-artifact-nix-flake-for = { python
-          , pythoneda-shared-artifact-events
+          , pythoneda-shared-artifact-code-events
           , pythoneda-shared-code-requests-events
           , pythoneda-shared-code-requests-jupyterlab
           , pythoneda-shared-code-requests-shared
@@ -128,8 +128,8 @@
               desc = description;
               inherit homepage package pname pythonMajorMinorVersion
                 pythonpackage version;
-              pythonedaSharedArtifactEvents =
-                pythoneda-shared-artifact-events.version;
+              pythonedaSharedArtifactCodeEvents =
+                pythoneda-shared-artifact-code-events.version;
               pythonedaSharedCodeRequestsEvents =
                 pythoneda-shared-code-requests-events.version;
               pythonedaSharedCodeRequestsJupyterlab =
@@ -153,7 +153,7 @@
 
             nativeBuildInputs = with python.pkgs; [ pip pkgs.jq poetry-core ];
             propagatedBuildInputs = with python.pkgs; [
-              pythoneda-shared-artifact-events
+              pythoneda-shared-artifact-code-events
               pythoneda-shared-code-requests-events
               pythoneda-shared-code-requests-jupyterlab
               pythoneda-shared-code-requests-shared
@@ -257,8 +257,8 @@
           pythoneda-artifact-nix-flake-python38 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python38;
-              pythoneda-shared-artifact-events =
-                pythoneda-shared-artifact-events.packages.${system}.pythoneda-shared-artifact-events-python38;
+              pythoneda-shared-artifact-code-events =
+                pythoneda-shared-artifact-code-events.packages.${system}.pythoneda-shared-artifact-code-events-python38;
               pythoneda-shared-code-requests-events =
                 pythoneda-shared-code-requests-events.packages.${system}.pythoneda-shared-code-requests-events-python38;
               pythoneda-shared-code-requests-jupyterlab =
@@ -273,8 +273,8 @@
           pythoneda-artifact-nix-flake-python39 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python39;
-              pythoneda-shared-artifact-events =
-                pythoneda-shared-artifact-events.packages.${system}.pythoneda-shared-artifact-events-python39;
+              pythoneda-shared-artifact-code-events =
+                pythoneda-shared-artifact-code-events.packages.${system}.pythoneda-shared-artifact-code-events-python39;
               pythoneda-shared-code-requests-events =
                 pythoneda-shared-code-requests-events.packages.${system}.pythoneda-shared-code-requests-events-python39;
               pythoneda-shared-code-requests-jupyterlab =
@@ -289,8 +289,8 @@
           pythoneda-artifact-nix-flake-python310 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python310;
-              pythoneda-shared-artifact-events =
-                pythoneda-shared-artifact-events.packages.${system}.pythoneda-shared-artifact-events-python310;
+              pythoneda-shared-artifact-code-events =
+                pythoneda-shared-artifact-code-events.packages.${system}.pythoneda-shared-artifact-code-events-python310;
               pythoneda-shared-code-requests-events =
                 pythoneda-shared-code-requests-events.packages.${system}.pythoneda-shared-code-requests-events-python310;
               pythoneda-shared-code-requests-jupyterlab =
@@ -305,8 +305,8 @@
           pythoneda-artifact-nix-flake-python311 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python311;
-              pythoneda-shared-artifact-events =
-                pythoneda-shared-artifact-events.packages.${system}.pythoneda-shared-artifact-events-python311;
+              pythoneda-shared-artifact-code-events =
+                pythoneda-shared-artifact-code-events.packages.${system}.pythoneda-shared-artifact-code-events-python311;
               pythoneda-shared-code-requests-events =
                 pythoneda-shared-code-requests-events.packages.${system}.pythoneda-shared-code-requests-events-python311;
               pythoneda-shared-code-requests-jupyterlab =
