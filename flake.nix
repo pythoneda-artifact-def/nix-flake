@@ -85,8 +85,8 @@
       let
         org = "pythoneda-artifact";
         repo = "nix-flake";
-        version = "0.0.3";
-        sha256 = "1rj2khzw1m422ggq5yrg2srqcrbyd89rpjvl1wpp4xpq8j96g2y8";
+        version = "0.0.4";
+        sha256 = "0mwkfaygnnny4q1hp1wwyvrkfdd1jbn0px1iwman9yrpzyrhrwcv";
         pname = "${org}-${repo}";
         pythonpackage = "pythoneda.artifact.nix_flake";
         package = builtins.replaceStrings [ "." ] [ "/" ] pythonpackage;
