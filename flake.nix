@@ -88,7 +88,7 @@
         version = "0.0.9";
         sha256 = "0c10gzqmk0g31iyb9rh3nvzbcgpcxx8lvwn5mb3dyms238i81mcc";
         pname = "${org}-${repo}";
-        pythonpackage = "pythoneda.artifact.nix_flake";
+        pythonpackage = "pythoneda.artifact.nix.flake";
         package = builtins.replaceStrings [ "." ] [ "/" ] pythonpackage;
         pkgs = import nixos { inherit system; };
         description = "Domain of the Nix Flake artifact";
