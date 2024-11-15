@@ -121,8 +121,8 @@
           in python.pkgs.buildPythonPackage rec {
             inherit pname version;
             projectDir = ./.;
-            pyprojectTemplateFile = ./pyprojecttoml.template;
-            pyprojectTemplate = pkgs.substituteAll {
+            pyprojectTomlTemplate = ./templates/pyproject.toml.template;
+            pyprojectToml = pkgs.substituteAll {
               authors = builtins.concatStringsSep ","
                 (map (item: ''"${item}"'') maintainers);
               desc = description;
@@ -141,7 +141,7 @@
               pythonedaSharedPythonlangDomain =
                 pythoneda-shared-pythonlang-domain.version;
 
-              src = pyprojectTemplateFile;
+              src = pyprojectTomlTemplate;
             };
             src = pkgs.fetchFromGitHub {
               owner = org;
@@ -167,7 +167,7 @@
               cp -r ${src} .
               sourceRoot=$(ls | grep -v env-vars)
               chmod +w $sourceRoot
-              cp ${pyprojectTemplate} $sourceRoot/pyproject.toml
+              cp ${pyprojectToml} $sourceRoot/pyproject.toml
             '';
 
             postInstall = ''
@@ -191,7 +191,7 @@
         devShells = rec {
           default = pythoneda-artifact-nix-flake-default;
           pythoneda-artifact-nix-flake-default =
-            pythoneda-artifact-nix-flake-python311;
+            pythoneda-artifact-nix-flake-python312;
           pythoneda-artifact-nix-flake-python38 = shared.devShell-for {
             banner = "${
                 pythoneda-shared-pythonlang-banner.packages.${system}.pythoneda-shared-pythonlang-banner-python38
@@ -248,11 +248,25 @@
               pythoneda-shared-pythonlang-domain.packages.${system}.pythoneda-shared-pythonlang-domain-python311;
             inherit archRole layer org pkgs repo space;
           };
+          pythoneda-artifact-nix-flake-python312 = shared.devShell-for {
+            banner = "${
+                pythoneda-shared-pythonlang-banner.packages.${system}.pythoneda-shared-pythonlang-banner-python312
+              }/bin/banner.sh";
+            extra-namespaces = "";
+            nixpkgs-release = nixpkgsRelease;
+            package = packages.pythoneda-artifact-nix-flake-python312;
+            python = pkgs.python312;
+            pythoneda-shared-pythonlang-banner =
+              pythoneda-shared-pythonlang-banner.packages.${system}.pythoneda-shared-pythonlang-banner-python312;
+            pythoneda-shared-pythonlang-domain =
+              pythoneda-shared-pythonlang-domain.packages.${system}.pythoneda-shared-pythonlang-domain-python312;
+            inherit archRole layer org pkgs repo space;
+          };
         };
         packages = rec {
           default = pythoneda-artifact-nix-flake-default;
           pythoneda-artifact-nix-flake-default =
-            pythoneda-artifact-nix-flake-python311;
+            pythoneda-artifact-nix-flake-python312;
           pythoneda-artifact-nix-flake-python38 =
             pythoneda-artifact-nix-flake-for {
               python = pkgs.python38;
@@ -316,6 +330,22 @@
                 pythoneda-shared-nix-flake-shared.packages.${system}.pythoneda-shared-nix-flake-shared-python311;
               pythoneda-shared-pythonlang-domain =
                 pythoneda-shared-pythonlang-domain.packages.${system}.pythoneda-shared-pythonlang-domain-python311;
+            };
+          pythoneda-artifact-nix-flake-python312 =
+            pythoneda-artifact-nix-flake-for {
+              python = pkgs.python312;
+              pythoneda-shared-artifact-code-events =
+                pythoneda-shared-artifact-code-events.packages.${system}.pythoneda-shared-artifact-code-events-python312;
+              pythoneda-shared-code-requests-events =
+                pythoneda-shared-code-requests-events.packages.${system}.pythoneda-shared-code-requests-events-python312;
+              pythoneda-shared-code-requests-jupyterlab =
+                pythoneda-shared-code-requests-jupyterlab.packages.${system}.pythoneda-shared-code-requests-jupyterlab-python312;
+              pythoneda-shared-code-requests-shared =
+                pythoneda-shared-code-requests-shared.packages.${system}.pythoneda-shared-code-requests-shared-python312;
+              pythoneda-shared-nix-flake-shared =
+                pythoneda-shared-nix-flake-shared.packages.${system}.pythoneda-shared-nix-flake-shared-python312;
+              pythoneda-shared-pythonlang-domain =
+                pythoneda-shared-pythonlang-domain.packages.${system}.pythoneda-shared-pythonlang-domain-python312;
             };
         };
       });
